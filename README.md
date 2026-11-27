@@ -51,9 +51,9 @@ It does nothing:
 
 1. In Jellyfin, open Dashboard > API Keys and create a key for LomboHangup.
 2. Copy `.env.example` to `.env` and fill in the URL and key.
-3. Build and start it (no image is published yet):
+3. Start it:
    ```sh
-   docker compose -f compose.example.yaml up -d --build
+   docker compose -f compose.example.yaml up -d
    docker compose -f compose.example.yaml exec lombo-hangup lombo-hangup doctor
    ```
 
