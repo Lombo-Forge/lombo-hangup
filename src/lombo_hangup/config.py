@@ -21,6 +21,7 @@ class Config:
     webhook_url: str | None
     dry_run: bool
     interval_seconds: int
+    grace_seconds: int
 
 
 def _truthy(value: str, name: str) -> bool:
@@ -49,12 +50,21 @@ def from_env(env: dict[str, str]) -> Config:
     if webhook and urlparse(webhook).scheme not in {"http", "https"}:
         raise ConfigError(f"{PREFIX}WEBHOOK_URL must start with http:// or https:// (or be empty)")
 
-    try:
-        interval = int(get("INTERVAL_SECONDS", "3600"))
-    except ValueError:
-        raise ConfigError(f"{PREFIX}INTERVAL_SECONDS must be a whole number of seconds") from None
-    if interval < 60:
-        raise ConfigError(f"{PREFIX}INTERVAL_SECONDS must be at least 60")
+    def seconds(name: str, default: str, least: int) -> int:
+        try:
+            value = int(get(name, default))
+        except ValueError:
+            raise ConfigError(f"{PREFIX}{name} must be a whole number of seconds") from None
+        if value < least:
+            raise ConfigError(f"{PREFIX}{name} must be at least {least}")
+        return value
 
-    # Safe by default: nothing changes anything until the person sets DRY_RUN=false.
-    return Config(url, key, webhook, _truthy(get("DRY_RUN", "true") or "true", "DRY_RUN"), interval)
+    # Safe by default: nothing is closed until the person sets DRY_RUN=false.
+    return Config(
+        url,
+        key,
+        webhook,
+        _truthy(get("DRY_RUN", "true") or "true", "DRY_RUN"),
+        seconds("INTERVAL_SECONDS", "300", 60),
+        seconds("GRACE_SECONDS", "600", 60),
+    )

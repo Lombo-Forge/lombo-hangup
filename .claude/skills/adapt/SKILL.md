@@ -5,7 +5,7 @@ description: Change LomboHangup's rules, thresholds, settings or alerts without 
 
 # Adapt LomboHangup
 
-1. **Change a rule:** edit `decide()` in `core.py`. Write the test first with plain data, watch it
+1. **Change a rule:** edit `core.py`. Write the test first with plain data, watch it
    fail, then change the code. Keep `core.py` free of network, disk and clock; pass what it needs in.
 2. **Add a setting:** read and validate it in `config.py` (the error must name the variable), add a
    commented line to `.env.example`, and add a test in `tests/test_app.py` for a bad value.

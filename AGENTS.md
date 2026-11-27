@@ -8,8 +8,7 @@ Notes for an AI coding agent (or a person) working in this repo. `CLAUDE.md` pul
 LomboHangup frees Live TV tuner slots that Jellyfin keeps open after the viewer has gone. It is a small Python 3.12 program, standard library only (add a
 dependency only when it clearly earns its place).
 
-**Skeleton:** `core.py`, the client and the settings are still the template's example. Read
-`docs/architecture.md` ("What it will do") before writing code.
+Design and the Jellyfin behaviour it relies on are in `docs/architecture.md`.
 
 ## Layout
 
