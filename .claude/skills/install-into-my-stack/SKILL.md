@@ -11,6 +11,7 @@ Ask, one question at a time, and use their answers (never assume a layout):
    - Compose: add the `lombo-hangup` service from `compose.example.yaml` to their file and join Jellyfin's network, so the URL can be `http://<jellyfin service name>:8096`.
    - Docker run or direct install: use the machine's address and port instead, e.g. `http://192.0.2.10:8096` (use their real one, only in their own `.env`).
 2. **Create an API key:** Jellyfin, Dashboard, API Keys, +. Name it after the app. One key per app.
+3. **Ask which players watch Live TV**, and whether any is external or DLNA: those may not report and must not be running when this is live.
 3. **Optional alerts:** do they have a Discord, Slack or similar webhook? Leave `LOMBO_HANGUP_WEBHOOK_URL` empty if not.
 4. **Write `.env`** from `.env.example`. Keep `LOMBO_HANGUP_DRY_RUN=true`. `.env` is git-ignored; never print the key back.
 5. **Start it and run the check:** `docker compose up -d`, then `docker compose exec lombo-hangup lombo-hangup doctor`. Every line must say `ok`.
